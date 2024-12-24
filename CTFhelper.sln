@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60676714-1E00-4519-B9F2-7CB6FDA33816}"
+	ProjectSection(SolutionItems) = preProject
+		main.js = main.js
+		manifest.json = manifest.json
+		XSS_Payload.js = XSS_Payload.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9533BF7F-484C-4A3E-ADE4-6D368AAC0334}
+	EndGlobalSection
+EndGlobal

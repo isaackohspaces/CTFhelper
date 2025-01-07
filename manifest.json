@@ -5,12 +5,17 @@
   "permissions": [
     "contextMenus",
     "clipboardRead",
-    "clipboardWrite"
+    "clipboardWrite",
+    "activeTab"
   ],
   "background": {
     "scripts": [ "main.js" ]
-    
-  }
-  
+
+  },
+  "host_permissions": [
+    "http://*/*", // Allows access to all HTTP websites
+    "https://*/*" // Allows access to all HTTPS websites
+  ]
+
 
 }

@@ -90,9 +90,22 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
             break;
         ///////ENCODER/DECODER CODE //////
         case "Base64Encode":
-            console.log('Base 64 encoder selected');
-            encodeString2base64()
-            
+           
+                // Capture the selected text
+                var selectedText = window.getSelection();
+
+                // Check if text was selected
+            if (selectedText) {
+                console.log('Selected text:', selectedText.toString());
+
+                    // Convert selected text to Base64
+                    var convertedText = encodeString2base64(selectedText.toString());
+                    console.log('Converted Base64:', convertedText);
+                } else {
+                    console.log('No text selected');
+                }
+    
+           
     }
 
 
@@ -104,12 +117,13 @@ function createMenuItems() {
             id: PARENT_ID,
             title: "CTF Helper",
         });
-    browser.contextMenus.create({
-        id: ENCODE_DECODE,
-        parent_Id: PARENT_ID,
-        title: 'Encode|Decode',
-        contexts: ["selection"]
-    })
+    browser.contextMenus.create(
+        {
+            id: ENCODE_DECODE,
+            parentId: PARENT_ID,
+            title: 'Encode|Decode',
+            contexts: ["selection"]
+        });
     browser.contextMenus.create(
         {
             id: "XSS",

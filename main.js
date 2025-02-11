@@ -2,6 +2,7 @@ const PARENT_ID = 'CTFHelper';
 const XSSTEST_ID = 'XSSTestPayload';
 const XSSCOOKIESTEALER_ID = 'XSSCookiestealer';
 const ENCODE_DECODE = 'Encodeanddecode'
+const USEFULLINK_ID = 'Usefullinks'
 var payloadlist = [
     ///////XSS TESTING PAYLOAD//////
     {
@@ -54,7 +55,28 @@ var payloadlist = [
         parentId: "Base64encodeanddecode",
         title: "Base 64 Decode",
         contexts: ["selection"]
+    },
+    ///Hash Checker///
+    {
+        id: "virusTotal",
+      
+        title: 'Virus Total Hash Check',
+        contexts:["selection"]
+    },
+    ///Useful Links///
+    {
+        id: "CVE",
+        parentId: USEFULLINK_ID,
+        title: 'CVE',
+        contexts:["all"]
+    },
+    {
+        id: "OWASP",
+        parentId: USEFULLINK_ID,
+        title: 'OWASP',
+        contexts:["all"]
     }
+
 
 ]
 
@@ -88,22 +110,58 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
             console.log('XSS CookieStealer1 selected');
             copyStringToClipboard('<script>alert(document.cookie)</script>');
             break;
-        ///////ENCODER/DECODER CODE //////
         case "Base64Encode":
-           
-                // Capture the selected text
-                var selectedText = window.getSelection();
 
-                // Check if text was selected
+            // Capture the selected text
+            var selectedText = info.selectionText;
+
+            // Check if text was selected
             if (selectedText) {
                 console.log('Selected text:', selectedText.toString());
+                // Convert selected text to Base64
+                var convertedText = encodeString2base64(selectedText.toString());
+                copyStringToClipboard(convertedText);
+                console.log('Converted Base64:', convertedText);
+            } else {
+                console.log('No text selected');
+            }
+            break;
+        case "Base64Decode":
+            var selectedText = info.selectionText;
 
-                    // Convert selected text to Base64
-                    var convertedText = encodeString2base64(selectedText.toString());
-                    console.log('Converted Base64:', convertedText);
-                } else {
-                    console.log('No text selected');
-                }
+            // Check if text was selected
+            if (selectedText) {
+                console.log('Selected text:', selectedText.toString());
+                // Convert selected text to Base64
+                var convertedText = decodeString2base64(selectedText.toString());
+                copyStringToClipboard(convertedText);
+                console.log('Converted Base64:', convertedText);
+            } else {
+                console.log('No text selected');
+            }
+            break;
+
+        ///////Virustotal /////
+        case "virusTotal":
+            var selectedText = info.selectionText;
+            var searchString = 'https://www.virustotal.com/gui/search/' + encodeURIComponent(selectedText);
+            console.log(selectedText)
+            browser.windows.create({ url: searchString });
+            break;
+        ///////Useful Link section /////
+        case 'CVE':
+            var urlstring = 'https://www.cve.org/';
+            browser.windows.create({ url: urlstring });
+            break;
+        case 'OWASP':
+            var urlstring = 'https://owasp.org/'
+            browser.windows.create({ url: urlstring });
+            break;
+        
+
+
+
+
     
            
     }
@@ -114,20 +172,13 @@ function createMenuItems() {
 
     browser.contextMenus.create(
         {
-            id: PARENT_ID,
-            title: "CTF Helper",
-        });
-    browser.contextMenus.create(
-        {
             id: ENCODE_DECODE,
-            parentId: PARENT_ID,
             title: 'Encode|Decode',
             contexts: ["selection"]
         });
     browser.contextMenus.create(
         {
             id: "XSS",
-            parentId: PARENT_ID,
             title: "XSS Payload"
         });
     browser.contextMenus.create(
@@ -140,7 +191,13 @@ function createMenuItems() {
         {
             id: XSSCOOKIESTEALER_ID,
             parentId: "XSS",
-            title:"XSS Cookie Stealer Payload"
+            title: "XSS Cookie Stealer Payload"
+        }
+    );
+    browser.contextMenus.create(
+        {
+            id: USEFULLINK_ID,
+            title: "Useful Links"
         }
     )
 
